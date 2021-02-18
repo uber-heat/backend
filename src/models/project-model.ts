@@ -1,6 +1,7 @@
 import mongooseToJson from '@meanie/mongoose-to-json';
 import { Mongoose, Model, Schema, Document } from 'mongoose';
 import ServiceContainer from '../services/service-container';
+import { HeaterInstance } from './heater-model';
 import Attributes from './model';
 import { UserInstance } from './user-model';
 
@@ -11,6 +12,7 @@ export interface ProjectAttributes extends Attributes {
   owner: UserInstance;
   name: string;
   description: string;
+  results: HeaterInstance[];
 }
 
 /**
@@ -47,6 +49,11 @@ function createProjectSchema() {
     description: {
       type: Schema.Types.String,
       default: null
+    },
+    results: {
+      type: Schema.Types.ObjectId,
+      ref: 'Heater',
+      default: []
     }
   });
 
