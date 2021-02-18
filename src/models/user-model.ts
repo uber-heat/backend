@@ -2,6 +2,7 @@ import mongooseToJson from '@meanie/mongoose-to-json';
 import { Document, Model, Mongoose, Schema } from 'mongoose';
 import ServiceContainer from '../services/service-container';
 import Attributes from './model';
+import { ProjectInstance } from './project-model';
 
 /**
  * User attributes interface.
@@ -14,6 +15,7 @@ export interface UserAttributes extends Attributes {
     password: string;
     banned: boolean;
     refreshToken?: string;
+    projects?: ProjectInstance[];
 }
 
 /**
@@ -79,6 +81,12 @@ function createUserSchema(container: ServiceContainer) {
         timestamps: true,
         toJSON: { virtuals: true },
         toObject: { virtuals: true }
+    });
+
+    schema.virtual('projects', {
+        ref: 'Project',
+        localField: '_id',
+        foreignField: 'owner'
     });
 
     // Password hash validation
