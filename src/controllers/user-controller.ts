@@ -77,8 +77,12 @@ export default class UserController extends Controller {
     public async createHandler(req: Request, res: Response): Promise<Response> {
         try {
             const user = await this.db.users.create({
-                name: req.body.name,
-                password: req.body.password
+                email: req.body.email,
+                surname: req.body.surname,
+                firstname: req.body.firstname,
+                company: req.body.company,
+                password: req.body.password,
+                banned: false
             });
             return res.status(201).send({
                 id: user.id,
@@ -114,8 +118,12 @@ export default class UserController extends Controller {
                     error_description: 'User not found'
                 }));
             }
-            user.name = req.body.name;
+            user.email = req.body.email;
+            user.surname = req.body.surname;
+            user.firstname = req.body.firstname;
+            user.company = req.body.company;
             user.password = req.body.password;
+            user.banned = req.body.banned;
             await user.save();
             return res.status(200).send({
                 id: user.id,
@@ -151,11 +159,23 @@ export default class UserController extends Controller {
                     error_description: 'User not found'
                 }));
             }
-            if (req.body.name != null) {
-                user.name = req.body.name;
+            if (req.body.email != null) {
+                user.email = req.body.email;
+            }
+            if (req.body.surname != null) {
+                user.surname = req.body.surname;
+            }
+            if (req.body.firstname != null) {
+                user.firstname = req.body.firstname;
+            }
+            if (req.body.company != null) {
+                user.company = req.body.company;
             }
             if (req.body.password != null) {
                 user.password = req.body.password;
+            }
+            if (req.body.banned != null) {
+                user.banned = req.body.banned;
             }
             await user.save();
             return res.status(200).send({

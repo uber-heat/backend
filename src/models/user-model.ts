@@ -7,8 +7,11 @@ import Attributes from './model';
  */
 export interface UserAttributes extends Attributes {
     email: string;
-    name: string;
+    surname: string;
+    firstname: string;
+    company: string;
     password: string;
+    banned: boolean;
     refreshToken?: string;
 }
 
@@ -44,16 +47,27 @@ function createUserSchema(container: ServiceContainer) {
                 message: 'Invalid email'
             }
         },
-        name: {
+        surname: {
             type: Schema.Types.String,
-            required: [true, 'Name is required'],
-            unique: [true, 'Name already exists']
+            required: [true, 'Surname is required']
+        },
+        firstname: {
+            type: Schema.Types.String,
+            required: [true, 'Surname is required']
+        },
+        company: {
+            type: Schema.Types.String,
+            required: [true, 'Company is required']
         },
         password: {
             type: Schema.Types.String,
             required: [true, 'Password is required'],
             minlength: [8, 'Password is too small'],
             select: false
+        },
+        banned: {
+            type: Schema.Types.Boolean,
+            default: false
         },
         refreshToken: {
             type: Schema.Types.String,
