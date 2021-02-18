@@ -1,3 +1,4 @@
+import mongooseToJson from '@meanie/mongoose-to-json';
 import { Document, Model, Mongoose, Schema } from 'mongoose';
 import ServiceContainer from '../services/service-container';
 import Attributes from './model';
@@ -91,6 +92,8 @@ function createUserSchema(container: ServiceContainer) {
             }
         }
     });
+
+    schema.plugin(mongooseToJson);
 
     return schema;
 }
