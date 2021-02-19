@@ -7,6 +7,7 @@ import DatabaseService from './database-service';
 import EnvironmentService from './environment-service';
 import ErrorService from './error-service';
 import ExpressService from './express-service';
+import HeaterService from './heater-service';
 import LogService from './log-service';
 import SchedulerService from './scheduler-service';
 import ServerService from './server-service';
@@ -49,6 +50,7 @@ export default class ServiceContainer {
     private _errors: ErrorService;
     private _cache: CacheService;
     private _scheduler: SchedulerService;
+    private _heaters: HeaterService;
 
     /**
      * Creates a new services container.
@@ -67,6 +69,7 @@ export default class ServiceContainer {
         this._errors = null;
         this._cache = null;
         this._scheduler = null;
+        this._heaters = null;
         this.env.load(); // Autoload environment
     }
 
@@ -172,5 +175,13 @@ export default class ServiceContainer {
             this.log.info('Loaded scheduler service', { type: 'service-container' });
         }
         return this._scheduler;
+    }
+
+    public get heaters(): HeaterService {
+        if (!this._heaters) {
+            this._heaters = new HeaterService(this);
+            this.log.info('Loaded heaters service', { type: 'service-container' });
+        }
+        return this._heaters;
     }
 }
