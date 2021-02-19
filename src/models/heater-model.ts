@@ -7,7 +7,7 @@ import Attributes from './model';
  * Heater attributes interface.
  */
 export interface HeaterAttributes extends Attributes {
-  heatType: string;
+  type: string;
   article: string;
   width?: number;
   height?: number;
@@ -15,10 +15,10 @@ export interface HeaterAttributes extends Attributes {
   depth?: number;
   diameter?: number;
   noise: {
-    10: number;
-    5: number;
-    2: number;
-    1: number;
+    n10: number;
+    n5: number;
+    n2: number;
+    n1: number;
   }
 }
 
@@ -51,10 +51,6 @@ function createProjectSchema() {
     article: {
       type: Schema.Types.String,
       required: [true, 'Article is required']
-    },
-    heatType: {
-      type: Schema.Types.String,
-      required: [true, 'Type is required']
     },
     width: {
       type: Schema.Types.Number,
@@ -89,19 +85,19 @@ function createProjectSchema() {
 
 function createNoiseSubSchema() {
   const schema = new Schema({
-    10: {
+    n10: {
       type: Schema.Types.Number,
       required: [true, '10m noise is required']
     },
-    5: {
+    n5: {
       type: Schema.Types.Number,
       required: [true, '5m noise is required']
     },
-    2: {
+    n2: {
       type: Schema.Types.Number,
       required: [true, '2m noise is required']
     },
-    1: {
+    n1: {
       type: Schema.Types.Number,
       required: [true, '1m noise is required']
     }
